@@ -2,20 +2,13 @@
 {% load raws %}
 <div class="container">
     <div class="row row-2">
-        <h2>All Products</h2>     
+        <h2>All Products</h2>
     </div>
     {% for product_raws in products|raws:4 %}
     <div class="row">
         {% for product in product_raws %}
         <div class="col-4">
-            <a href="{% url 'detail_product' %}"><img src="{{ product.image.url }}"></a>
-            <h4>Red Printed T-Shirt</h4>
-           
-            <p>$50.00</p>
-        </div>
-        {% endfor %}
-        <div class="col-4">
-            <img src="{{ product.image.url }}">
+            <a href="{% url 'detail_product' product.id %}"><img src="{{ product.image.url }}"></a>
             <h4>{{ product.title }}</h4>
             <div class="rating">
                 <i class="fa fa-star"></i>
@@ -26,11 +19,13 @@
             </div>
             <p>${{ product.price }}</p>
         </div>
+        {% endfor %}
     </div>
     {% endfor %}
     <div class="page-btn">
         {% if products.has_previous %}
-        <a href="?page={{ products.previous_page_number }}"><span><<</span></a>
+        <a href="?page={{ products.previous_page_number }}"><span>
+                <<< </span></a>
         {% endif %}
         {% for i in products.paginator.page_range %}
         <a href="?page={{i}}"><span>{{i}}</span></a>
@@ -38,6 +33,6 @@
         {% if products.has_next %}
         <a href="?page={{ products.next_page_number }}"><span>>></span></a>
         {% endif %}
-        
+
     </div>
 </div>
